@@ -1,0 +1,19 @@
+<extend name="Common/form-ajax" />
+<block name="form">
+	<tr>
+		<th>快捷菜单:</th>
+		<td>
+			{:W('Chosen/one',array('rid',$info['rid'],$rule))}
+		</td>
+	</tr>
+	<tr>
+		<th>排序:</th>
+		<td>
+			<input type="text" name="order" value="{$info['sort']}" tip="排序">
+			<input type="hidden" name="uid" value="{$Think.const.UID}">
+		</td>
+	</tr>
+	<tr>
+		<th height="200"></th><td></td>
+	</tr>
+</block>
