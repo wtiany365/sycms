@@ -326,7 +326,7 @@ INSERT INTO `sy_config` VALUES ('32', '短信账号', 'SMS_USERNAME', '1', '', '
 INSERT INTO `sy_config` VALUES ('33', '短信密码', 'SMS_PASSWORD', '1', '', '', '短信平台的密码', '3', 'Common', '0', '1', '0');
 INSERT INTO `sy_config` VALUES ('206', '导航分组', 'NAV_GROUPS', '11', '1:首页焦点图\r\n2:列表焦点图\r\n3:顶部导航\r\n4:底部导航\r\n5:友情链接', '', '前台菜单分组', '0', 'Admin', '0', '1', '0');
 INSERT INTO `sy_config` VALUES ('9', '联系地址', 'SITE_ADRESS', '1', '河南省郑州市', '', '站长联系地址', '1', 'Home', '0', '1', '0');
-INSERT INTO `sy_config` VALUES ('8', '联系电话', 'SITE_PHONE', '1', '13673663235', '', '站长联系电话', '1', 'Home', '0', '1', '0');
+INSERT INTO `sy_config` VALUES ('8', '联系电话', 'SITE_PHONE', '1', '13612345678', '', '站长联系电话', '1', 'Home', '0', '1', '0');
 INSERT INTO `sy_config` VALUES ('53', '网站关闭提示', 'SITE_CLOSE_INFO', '2', '站点维护中，请稍等一会...', '', '前台网站关闭提示', '5', 'Common', '0', '1', '0');
 INSERT INTO `sy_config` VALUES ('41', '邮箱服务端口', 'EMAIL_PORT', '3', '25', '', '', '4', 'Common', '0', '1', '0');
 INSERT INTO `sy_config` VALUES ('113', '允许上传类型', 'UPLOAD_ALLOW', '2', 'jpg,gif,png,jpeg,txt,doc,docx,xls,ppt,zip,rar,mp3', '', '文件后缀', '11', 'Common', '0', '1', '0');
