@@ -12,59 +12,34 @@ $config=array(
     'TMPL_FILE_DEPR'        =>  '_', //模板文件CONTROLLER_NAME与ACTION_NAME之间的分割符
 
     // 11-Think模板引擎标签库相关设定
-    'TAGLIB_BUILD_IN'       =>  'cx,Home\TagLib\Home', // 内置标签库名称(标签使用不必指定标签库名称),以逗号分隔 注意解析顺序
+    'TAGLIB_BUILD_IN'       =>  'cx,Common\TagLib\Home', // 内置标签库名称(标签使用不必指定标签库名称),以逗号分隔 注意解析顺序
     'TAGLIB_PRE_LOAD'       =>  '',   // 需要额外加载的标签库(须指定标签库名称)，多个以逗号分隔 
 
     /* 12-URL设置 */
+    'URL_CASE_INSENSITIVE'  =>  true,   // 默认false 表示URL区分大小写 true则表示不区分大小写
     'URL_MODEL'             =>  2,       // URL访问模式,可选参数0、1、2、3,代表以下四种模式：
-    // 0 (普通模式); 1 (PATHINFO 模式); 2 (REWRITE  模式); 3 (兼容模式)  默认为PATHINFO 模式
+    'URL_PATHINFO_DEPR'     =>  '/',    // PATHINFO模式下，各参数之间的分割符号
+    'URL_HTML_SUFFIX'       =>  'html',  // URL伪静态后缀设置
     'URL_DENY_SUFFIX'       =>  'ico|png|gif|jpg', // URL禁止访问的后缀设置
+
     'URL_PARAMS_BIND'       =>  true, // URL变量绑定到Action方法参数
-    'URL_PARAMS_BIND_TYPE'  =>  0, // URL变量绑定的类型 0 按变量名绑定 1 按变量顺序绑定
+    'URL_PARAMS_BIND_TYPE'  =>  1, // URL变量绑定的类型 0 按变量名绑定 1 按变量顺序绑定
+
+    'URL_PARAMS_FILTER'     =>  true, // URL变量绑定过滤
+    'URL_PARAMS_FILTER_TYPE'=>  '', // URL变量绑定过滤方法 如果为空 调用DEFAULT_FILTER
+
     'URL_ROUTER_ON'         =>  true,   // 是否开启URL路由
     'URL_ROUTE_RULES'       =>  array(
-        //'youyou/texts/:id' => array('Home/Article/index',array('cid'=>30)),
-        //'youyou/texts/:id' => 'Home/Article/index?cid=30',
-        //'read/:id\d' => array('Document/Index',array('type'=>5,'group'=>8)),
-        //'blog/:id'=>'Home/blog/read',
-        //'ourdoc/'=>'Home/List/index?cid=30'
-        //'/^news\/p\/(\d+)$/'=>'list/index?cid=24&p=:1&fff=:1-:1',
-
-//Mobile$=>Mobile/Index/index
-// Special/:id\d=>Special/shows
-// :e/p/:p\d=>List/index
-// :e/:id\d=>Show/index
-// /^(\w+)$/=>List/index?e=:1
-// 
-        //栏目
-        //'culture$'=>'home/list/index?cid=84',
-
-        //留言板
-        //'guestbook$'=>'guestbook/index',
         //招聘
         //'job$'=>'job/index',
-        //搜索
-        'search/tag/:tag'=>'search/tag',
-        'search/month/:month'=>'search/month',
-        'search'=>'search/index',
-        
 
         //栏目通用
         ':cname/:id\d'=>'show/index',
-        //':cname/p/:p\d'=>'list/index',
-        // ':cname'=>'list/index',
-
-        
-
-    ), // 默认路由规则 针对模块
+        ':cname/p/:p\d'=>'list/index',
+    ), 
     'URL_MAP_RULES'         =>  array(
-
-        // 'news' => 'list/index?cid=24',
-        // 'info' => 'list/index?cid=29',
-        //'contact' => 'list/index?cid=62',
-        // 'aboutus' => 'list/index?cid=62',
-
-    ), // URL映射定义规则
+        //'aboutus' => 'list/index?cid=62',
+    ), 
 
 
     /* 21-静态缓存 */
@@ -72,7 +47,6 @@ $config=array(
     'HTML_CACHE_TIME'   =>    0,   // 全局静态缓存有效期（秒）
     'HTML_FILE_SUFFIX'  =>    '.html', // 设置静态缓存文件后缀
     'HTML_CACHE_RULES'  =>     array(  
-        //'Article:index'=>'infos/texts/{id}',
         'Index:index'  =>     array('{:action}', '3600'), 
         'List:index'  =>     array('{cname}', '3600'), 
         'Show:index'  =>     array('{cname}/{id}', '3600'), 
@@ -83,7 +57,7 @@ $config=array(
 
 $route_rule=D('Common/Urlmap')->getRouteRule();
 if(!empty($route_rule)){
-    $config['URL_ROUTE_RULES']=array_merge($config['URL_ROUTE_RULES'],$route_rule);
+    $config['URL_MAP_RULES']=array_merge($config['URL_MAP_RULES'],$route_rule);
 }
 
 return $config;

@@ -16,11 +16,12 @@ class CategoryModel extends \Common\Model\CategoryModel{
 			$page=$this->create();
 			$page['cid']=$data['id'];
 			$page['title']=$data['title'];
+			$page['add_time']=$data['add_time'];
 			D('Page')->add($page);
 		}
 
 		//联动增加路由
-		$route['url']=D('Common/Urlmap')->getCategoryUrl($data['mid'],$data['name'],$data['id']);
+		$route['url']=D('Common/Urlmap')->categoryUrl($data['mid'],$data['name']);
 		$route['route']=$data['name'];
 		D('Common/Urlmap')->add($route);
 
@@ -39,7 +40,7 @@ class CategoryModel extends \Common\Model\CategoryModel{
 
 		//联动修改路由
 		$name=M('Category')->where("id={$data['id']}")->getField('name');
-		$route['url']=D('Common/Urlmap')->getCategoryUrl($data['mid'],$data['name'],$data['id']);
+		$route['url']=D('Common/Urlmap')->categoryUrl($data['mid'],$data['name']);
 		$route['route']=$data['name'];
 		D('Common/Urlmap')->where("route='{$name}'")->save($route);
 

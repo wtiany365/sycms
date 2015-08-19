@@ -101,7 +101,17 @@ class IndexController extends AdminBaseController {
 
         return $result;
     }
+    //后台菜单搜索
+    public function search($keywords=''){
+        //数据
+        $map['type']=2;
+        $map['status']=1;
+        $map['title']=array('like','%'.$keywords.'%');
+        $list=D('AuthRule')->where($map)->field('id,title,name')->select();
+        $this->assign('list',$list);
 
+        $this->display();
+    }
 
 	//后台主页-数据统计
     public function system(){
@@ -155,31 +165,36 @@ class IndexController extends AdminBaseController {
     }
 	//清理缓存
 	public function delCache(){
-		$status=del_dir(RUNTIME_PATH);
-		if($status) $this->success('清理缓存完成');
-		else $this->error('清理缓存失败');
+        if(APP_MODE == 'sae'){
+            $Kvdb = A('Admin/Kvdb');
+            $Kvdb->del();
+        }else{
+            $status=del_dir(RUNTIME_PATH);
+            if($status) $this->success('清理缓存完成');
+            else $this->error('清理缓存失败');
+        }
 	}
 
-	//输出并缓存头部模板
-	public function header($style=''){
-		if(!empty($style)) $this->display('Index:header-'.$style);
-		else $this->display('Index:header');
-	}
-	//输出并缓存脚部模板
-	public function footer($style=''){
-		if(!empty($style)) $this->display('Index:footer-'.$style);
-		else $this->display('Index:footer');
-	}
+    //公用插件
+    public function widget(){
+        $name=I('get.name','');
+        if(empty($name)) return false;
+        C('SHOW_PAGE_TRACE',false);
+        $widget=ucwords($name);
+        R('Admin/'.$widget.'/server',array(),'Widget');
+        exit();
+    }
 
-	//公用插件
-	public function widget(){
-		$name=I('get.name','');
-		if(empty($name)) return false;
-		C('SHOW_PAGE_TRACE',false);
-		$widget=ucwords($name);
-		R('Admin/'.$widget.'/server',array(),'Widget');
-		exit;
-	}
 
+	// //输出并缓存头部模板
+	// public function header($style=''){
+	// 	if(!empty($style)) $this->display('Index:header-'.$style);
+	// 	else $this->display('Index:header');
+	// }
+	// //输出并缓存脚部模板
+	// public function footer($style=''){
+	// 	if(!empty($style)) $this->display('Index:footer-'.$style);
+	// 	else $this->display('Index:footer');
+	// }
 
 }

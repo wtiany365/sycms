@@ -3,15 +3,25 @@ namespace Home\Controller;
 use Common\Controller\HomeBaseController;
 
 class GuestbookController extends HomeBaseController {
+    public function _initialize() {
+        parent::_initialize();
+        $meta=array(
+            'meta_title'=>'提交建议',
+        );
+        $this->assign($meta);
+    }
 
     public function index() {
         if(IS_POST){$this->addMsg();exit;}
 
         $cate=D('Category')->where("name='guestbook'")->find();
-        $cate['url']=U('/'.$cate['name']);
-        $this->assign('CATEGORY',$cate);
-        $this->assign('CID',$cate['id']);
-        $this->assign('PID',$cate['pid']);
+        if($cate){
+            $cate['url']=U('/'.$cate['name']);
+            $this->assign('CATEGORY',$cate);
+            $this->assign('CID',$cate['id']);
+            $this->assign('PID',$cate['pid']);
+        }
+
 
         $count=M('Guestbook')->count();
         $Page =new \Lib\Page($count,10);

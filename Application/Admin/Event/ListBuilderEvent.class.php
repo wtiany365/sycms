@@ -36,9 +36,8 @@ class ListBuilderEvent extends Controller{
 		if(empty($type) || $type=="text"){
 			$search.='<span class="text-icon">'.$title.'</span><input name="'.$field.'" type="text">';
 		}elseif($type=="select"){
-			if(is_string($extra)){
-				$values=str_arr($extra);
-			}
+			if(is_string($extra)) $values=str_arr($extra);
+			else $values=$extra;
 			$search.='<span class="text-icon">'.$title.'</span><select name="'.$field.'">';
 			foreach ($values as $k => $v) {
 				$search.='<option value="'.$k.'">'.$v.'</option>';

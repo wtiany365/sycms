@@ -6,7 +6,7 @@
 
 <div id="{$name}" class="UploaderImgBox">
     <empty name="value">
-    <img id="{$name}_thumb" src="__PUBLIC__/Img/upload-thumb.png">
+    <img id="{$name}_thumb" src="__PUBLIC__/Img/thumb.png">
     <else />
     <img id="{$name}_thumb" src="{$value}">
     </empty>
@@ -62,7 +62,7 @@
     });
     $('#'+id+'_remove').click(function(e) {
         $('#'+id+'_input').val('');
-        $('#'+id+'_thumb').attr('src',"__PUBLIC__/Img/upload-thumb.png");
+        $('#'+id+'_thumb').attr('src',"__PUBLIC__/Img/thumb.png");
     });
 
 })(jQuery);

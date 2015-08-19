@@ -15,7 +15,7 @@
 <block name="list">
 <tr>
 	<th width="150">名称</th>
-    <th>配置值</th>
+    <th>标识</th>
     <th>备注</th>
     <th width="80" class="tc">分组</th>
 	<th width="70" class="tc">模块</th>
@@ -25,7 +25,7 @@
 <foreach name="list" item="v">
 <tr>
     <td>{$v.title}</td>
-    <td>{:msubstr($v['value'],0,50)}</td>
+    <td>{$v.name}</td>
     <td>{:msubstr($v['remark'],0,50)}</td>
     <td class="tc">{:int_str($v['groups'],'CONFIG_GROUPS')}</td>
     <td class="tc">{$v.module}</td>

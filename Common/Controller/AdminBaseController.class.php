@@ -151,7 +151,7 @@ class AdminBaseController extends Controller {
                 break;
             case 'del':
                 $map['id']=array('IN',$pk);
-                $return = M($model)->where($map)->delete();
+                $return = D($model)->where($map)->delete();
                 break;
             default:
                 $return=call_user_func(array($this,'batchCall'),$post['batch'],$pk);

@@ -13,7 +13,7 @@ class TagsController extends AdminBaseController {
 		$limit=$this->_page('Tag',$where);
 		//数据
 		$list=M('Tag')
-			->field('id,title,use,view,groups,status,sort')
+			->field('id,title,view,groups,status,sort')
 			->limit($limit)
 			->order('sort DESC')
 			->where($where)
@@ -21,22 +21,19 @@ class TagsController extends AdminBaseController {
 
 		$Builder=A('listBuilder','Event');
 		$Builder->addAction('添加标签','add','AjaxHtml btn-green')
-			->addAction('重建标签','create','AjaxGet btn-blue')
 			->addSearch('标签查询','title','like','text')
-			->addSearch('分组查询','groups','eq','select','0:全部,1:文章,2:单页,3:专题')
+			->addSearch('分组查询','groups','eq','select',C('TAG_GROUPS'))
 			->addBatch('排序','sort')
 			->addBatch('禁用','disable')
 			->addBatch('启用','enable')
-			->addBatch('备份','backup')
-			->addBatch('刷新','reload')
+			->addBatch('删除','del')
 			->addField('批量','batch','batch')
 			->addField('排序','sort','sort')
 			->addField('序号','id')
 			->addField('标签','title')
-			->addField('使用次数','use')
 			->addField('点击次数','view')
 			->addField('状态','status','status')
-			->addField('分组','groups','cn','0:默认,1:文章,2:单页,3:专题')
+			->addField('分组','groups','cn',C('TAG_GROUPS'))
 			->addField('操作','field_action');
 
 		$Builder->addFieldAction('编辑标签','edit','AjaxHtml btn-blue')
@@ -48,18 +45,19 @@ class TagsController extends AdminBaseController {
 
 	//批量扩展方法
 	protected function callBatch($batch,$pk){
-
 		return true;
 	}
 
 	public function add(){
 		if(IS_POST){$this->addPost();exit;}
-
+		//默认值
+		$info=array('sort'=>0,'status'=>1,'groups'=>0);
 		$Builder=A('FormBuilder','Event');
 		$Builder->addInput('标签','title','input','require','请填写标签名称')
 			->addInput('排序','sort','input','','标签排序(数值越小越靠前)')
 			->addInput('状态','status','radio','','启用或禁用','1:开启,0:禁用')
-			->addInput('分组','groups','select','','请填写分组名称','0:默认,1:小学,2:初中,3:大学')
+			->addInput('分组','groups','select','','请填写分组名称',C('TAG_GROUPS'))
+			->dataInfo($info)
 			->display();
 	}
 	private function addPost(){
@@ -82,7 +80,7 @@ class TagsController extends AdminBaseController {
 			->addInput('序号','id','hidden')
 			->addInput('排序','sort','text','','标签排序(数值越小越靠前)')
 			->addInput('状态','status','radio','','启用或禁用','1:开启,0:禁用')
-			->addInput('分组','groups','select','','请填写分组名称','0:默认,1:小学,2:初中,3:大学')
+			->addInput('分组','groups','select','','请填写分组名称',C('TAG_GROUPS'))
 			->dataInfo($info)
 			->display();
 	}

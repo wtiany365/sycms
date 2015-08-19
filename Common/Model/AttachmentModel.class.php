@@ -54,6 +54,7 @@ class AttachmentModel extends Model{
 
 		//图片处理(缩放|水印)
 		if(in_array( $file['ext'], $this->image_ext )){
+			$file['type']=1;//图片类型
 			if($config['thumb'] || ( C('UPLOAD_WATER') && $config['water']) ){
 				$file=$this->doImage($file,$config);
 			}
@@ -80,7 +81,6 @@ class AttachmentModel extends Model{
     //图片处理(缩放|水印)
     private function doImage($file=array(),$config=array()){
     	$file_path='Uploads/'.$file['savepath'].$file['savename'];
-    	$file['type']=1;//图片类型
 
     	$Image = new \Think\Image();
 		$Image->open($file_path);
@@ -115,6 +115,7 @@ class AttachmentModel extends Model{
     	$name=str_replace('.'.$file['ext'],'',$file['savename']);
     	$path=trim($file['savepath'],'/');
     	$type=isset($file['type']) ? $file['type'] : 0;
+    	
     	$result=array(
     		'title'=>$title,
     		'name'=>$name,

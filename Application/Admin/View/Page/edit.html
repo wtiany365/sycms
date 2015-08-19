@@ -15,6 +15,13 @@
 			            单页编辑
 			        </th>
 			    </tr>
+                <tr>
+                    <td>栏目:</td>
+                    <td>
+                        <input type="hidden" name="cid" value="{$info.cid}">
+                        {$cate[$info['cid']]}
+                    </td>
+                </tr>
 				<tr>
 					<td>标题:</td>
 					<td>
@@ -38,13 +45,6 @@
 					<td>描述:</td>
 					<td>
 						<textarea name="description" style="width:50%" tip="描述(字数80个汉字，160个字符以内)">{$info.description}</textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>栏目:</td>
-					<td>
-                        <input type="hidden" name="cid" value="{$info.cid}">
-                        {$cate[$info['cid']]}
 					</td>
 				</tr>
                 <tr>

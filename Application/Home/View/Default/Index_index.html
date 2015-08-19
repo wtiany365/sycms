@@ -39,7 +39,7 @@
 
 				<div class="list-article">
 
-					<artlist cid="29" limit="6" order="id desc">
+					<tablist table="article" limit="6" order="id desc">
 					<div class="panel-box mbt10">
 						<div class="tit">
 							{$v.cate_title}
@@ -47,7 +47,7 @@
 						<div class="con cl">
 							<a href="{$v.url}">
 							<if condition="$v['thumb']">
-								<img class="img fl" src="__ROOT__{$v['thumb']}" />
+								<img class="img fl" src="{$v['thumb']}" />
 							</if>
 							</a>
 							<div class="text">
@@ -55,7 +55,7 @@
 									<a href="{$v.url}">{$v.title}</a>
 								</h3>
 								<div class="mbt10">
-									<span class="tag-list gray">{:value_tag($v['tag'])}</span>
+									<span class="tag-list gray">{:tags($v['tag'])}</span>
 									<span class="gray">发布时间: {$v.add_time}</span>
 								</div>
 								<p class="ti">{:msubstr($v['description'],0,120)}<a class="fr" href="{$v.url}">阅读全文>></a></p>
@@ -63,10 +63,10 @@
 						</div>
 						<div class="fot cl">
 							<p class="fl">关键字:{$v.keywords}</p>
-							<p class="fr">阅读量:{$v.view} View</p>
+							<p class="fr">阅读量:{$v.view}</p>
 						</div>
 					</div>
-					</artlist>
+					</tablist>
 
 				</div>
 			</div>

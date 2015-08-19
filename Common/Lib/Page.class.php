@@ -37,8 +37,23 @@ class Page{
         $this->totalRows  = $totalRows; //设置总记录数
         $this->listRows   = $listRows;  //设置每页显示行数
         $this->parameter  = empty($parameter) ? $_GET : $parameter;
-        $this->nowPage    = empty($_GET[$this->p]) ? 1 : intval($_GET[$this->p]);
-        $this->nowPage    = $this->nowPage>0 ? $this->nowPage : 1;
+        //微风增加_按变量顺序绑定01
+        if(C('URL_PARAMS_BIND_TYPE')){
+            $path=I('path.');
+            $end_var=end($path);
+            if(strpos($end_var, 'p') === 0){
+                $now_var=substr($end_var, 1);
+                if(is_numeric($now_var)) $nowPage=$now_var;
+            }
+            
+            if(isset($nowPage)) $this->nowPage=$nowPage;
+            else $this->nowPage=1;
+        }else{
+            $this->nowPage    = empty($_GET[$this->p]) ? 1 : intval($_GET[$this->p]);
+            $this->nowPage    = $this->nowPage> 0 ? $this->nowPage : 1;
+        }    
+
+
         $this->firstRow   = $this->listRows * ($this->nowPage - 1);
     }
 
@@ -78,7 +93,12 @@ class Page{
             $this->url = U(ACTION_NAME, $this->parameter);
         }else {
             $depr = C('URL_PATHINFO_DEPR');
-            $this->url = rtrim(U('/'.$this->url,'',false),$depr).$depr.'p'.$depr.urlencode('[PAGE]').'.html';
+            //微风增加_按变量顺序绑定02
+            if(C('URL_PARAMS_BIND_TYPE')){
+                $this->url = rtrim(U('/'.$this->url,'',false),$depr).$depr.'p'.urlencode('[PAGE]').'.html';
+            }else{
+                $this->url = rtrim(U('/'.$this->url,'',false),$depr).$depr.'p'.$depr.urlencode('[PAGE]').'.html';
+            }
         }
 
         /* 计算分页信息 */

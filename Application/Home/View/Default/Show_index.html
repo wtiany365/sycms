@@ -17,9 +17,12 @@
 				<div class="show-article">
 					<div class="panel-box mbt10">
 						<div class="tit">
-							{$show.title}
+							<position cid="$CID" mark="/" /><span> / </span>{$show.title}
 						</div>
 						<div class="con">
+							<h1>{$show.title}</h1>
+							<hr>
+							<p class="tr gray mbt10"><small class="mrt10">发布日期:{$show.add_time}</small><small class="mrt10">阅读量:{$show.view}</small></p>
 							{$show.content}
 						</div>
 						<div class="fot cl">
@@ -41,15 +44,18 @@
 						</div>
 					</div>
 				</div>
+				<div class="uyan">
+					<!-- UY BEGIN -->
+					<div id="uyan_frame"></div>
+					<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1957775"></script>
+					<!-- UY END -->
+				</div>
 			</div>
 			<div class="span-4">
 				<notempty name="show.thumb">
-				<div class="panel-box list-news mbt10">
-					<div class="tit">
-						缩略图
-					</div>
+				<div class="panel-box mbt10">
 					<div class="con tc">
-						<img src="__ROOT__/{$show.thumb}" width="100%" >
+						<img src="{$show.thumb}" style="max-width:100%;" >
 					</div>
 				</div>
 				</notempty>

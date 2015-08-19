@@ -12,17 +12,6 @@ class AdminMenuController extends AdminBaseController {
 		$this->display();
 	}
 
-	public function search($keywords=''){
-		//数据
-		$map['type']=2;
-		$map['status']=1;
-		$map['title']=array('like','%'.$keywords.'%');
-		$list=D('AuthRule')->where($map)->field('id,title,name')->select();
-		$this->assign('list',$list);
-
-		$this->display();
-	}
-
 	public function add(){
 		if(IS_POST){$this->addPost();exit;}
 		$rule=M('AuthRule')->where('type=2 AND status=1')->getField('id,title',true);
@@ -40,9 +29,9 @@ class AdminMenuController extends AdminBaseController {
 		else $this->error('添加失败');
 	}
 
-	public function edit($id){
+	public function edit($rid){
 		if(IS_POST){$this->editPost();exit;}
-		$info=M('AdminMenu')->where('uid='.UID.' AND rid='.$id)->find();
+		$info=M('AdminMenu')->where('uid='.UID.' AND rid='.$rid)->find();
 		$this->assign('info',$info);
 
 		$rule=M('AuthRule')->where('type=2 AND status=1')->getField('id,title',true);
@@ -50,18 +39,18 @@ class AdminMenuController extends AdminBaseController {
 
 		$this->display();
 	}
-	private function editPost(){
+	private function editPost($rid){
 		$Model=D('AdminMenu');
 		$data=$Model->create();
 		if(!$data) $this->error($Model->getError());
 
-		$return=$Model->save($data);
+		$return=$Model->where("uid={$data['uid']} AND rid={$data['rid']}")->save($data);
 		if($return) $this->success('修改成功');
 		else $this->error('修改失败');
 	}
 
-	public function del($id){
-		$return=M('AdminMenu')->where('uid='.UID.' AND rid='.$id)->delete();
+	public function del($rid){
+		$return=M('AdminMenu')->where('uid='.UID.' AND rid='.$rid)->delete();
 		if($return) $this->success('删除成功');
 		else $this->error('删除失败');
 	}

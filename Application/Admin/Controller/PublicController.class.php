@@ -7,7 +7,7 @@ class PublicController extends Controller {
 
         if(IS_POST){ $this->loginPost();exit;}
     	
-		if(is_login()) $this->redirect('Admin/Index/index');
+		if(is_login()) $this->redirect('/Admin');
         
 		$this->display();
 	}
@@ -28,7 +28,7 @@ class PublicController extends Controller {
         $admin=D('Admin')->login($username,$password,$remember);
         if(!$admin) $this->error(D('Admin')->getError());
 
-        $this->success('登录成功',U('Admin/Index/index'));
+        $this->success('登录成功',U('/Admin'));
     }
 
     //退出登录

@@ -5,7 +5,7 @@
 </notdefined>
 
 <div class="IfyThumbBox">
-    <img class="IfyThumbImg" <empty name="value">src="__PUBLIC__/Img/upload-thumb.png"<else />src="__ROOT__{$value}"</empty> width="128" height="108">
+    <img class="IfyThumbImg" <empty name="value">src="__PUBLIC__/Img/thumb.png"<else />src="__ROOT__{$value}"</empty> width="128" height="108">
     <br/>
     <input id="{$name}" type="file" /><input class="IfyThumbDel" type="button" value="取消上传">
     <input class="IfyThumbVal" name="{$name}" type="hidden" <notempty name="value">value="{$value}"</notempty> />
@@ -52,7 +52,7 @@ $(function(){
 
     });
     $('.IfyThumbDel').click(function(e){
-        $(this).siblings('img.IfyThumbImg').attr('src',"__PUBLIC__/Img/upload-thumb.png");
+        $(this).siblings('img.IfyThumbImg').attr('src',"__PUBLIC__/Img/thumb.png");
         $(this).siblings('input.IfyThumbVal').val('');
     });
 });

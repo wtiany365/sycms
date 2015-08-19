@@ -56,7 +56,7 @@ class AdminController extends AdminBaseController {
 
 		$info=M('Admin')->find($id);
 		$this->assign('info',$info);
-		$log=M('AdminLog')->order('id asc')->find($id);
+		$log=M('AdminLog')->where("uid={$id}")->order('log_time asc')->find();
 		$this->assign('log',$log);
 
 		$this->display();

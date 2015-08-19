@@ -57,7 +57,7 @@ class FormBuilderEvent extends Controller{
 
 		foreach ($input as &$v) {
 
-			if(!empty($v['name']) && $info[$v['name']]){ 
+			if(!empty($v['name']) && isset($info[$v['name']])){ 
 				$v['value']=$info[$v['name']]; 
 			}else{
                 switch ($v['type']) {

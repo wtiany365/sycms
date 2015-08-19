@@ -5,7 +5,7 @@ class SearchLogic{
 //按栏目分组导航
     public function channelGroup(){
 
-        $sql="select c.title,c.name,count(a.id) as total from sy_category c left join sy_article a on a.cid=c.id where c.is_menu=0 and c.mid =1 group by c.id order by c.sort asc";
+        $sql="select c.title,c.name,count(a.id) as total from sy_category c left join sy_article a on a.cid=c.id where c.is_menu=0 and c.mid =1 group by c.id order by total desc";
         $result=M()->query($sql);
         return $result;
         //$this->assign('channel_group',$channel_group);

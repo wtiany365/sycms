@@ -12,7 +12,6 @@
         <td>栏目模型:</td>
         <td>
             <select name="mid">
-                <option value="0">独立模型</option>
             <foreach name="model" key="k" item="v">
                 <option value="{$k}" <eq name="mid" value="$k">selected</eq> >{$v}</option>
             </foreach>

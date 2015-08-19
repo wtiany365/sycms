@@ -5,18 +5,28 @@ use Common\Controller\HomeBaseController;
 //栏目详情页
 class ShowController extends HomeBaseController {
 
-    public function index($id) {
-        $cate=D('Category')->getCategory();
+    public function index($cname='',$id=0) {
+        if( empty($cname) || strlen($cname) >15 ) E('非法操作');
+        if( !is_numeric($id) ) E('非法操作');
 
+        $cate=D('Home/Category')->getCategory($cname);
+        unset($cate['setting']);
         $this->assign('CATEGORY',$cate);
         $this->assign('CID',$cate['id']);
         $this->assign('PID',$cate['pid']);
 
         //文章数据
-        $id=I('id','','intval');
+        if(!$id) $id=I('id','','intval');
         $table=M('Model')->where("id={$cate['mid']}")->getField('model_table');
         $info=M($table)->find($id);
         $this->assign('show',$info);
+
+        $meta=array(
+            'meta_title'=>$info['title'],
+            'meta_keywords'=>$info['keywords'],
+            'meta_description'=>$info['description'],
+        );
+        $this->assign($meta);
 
         //上一篇 下一篇
         $page_next=M($table)->field('id,cid,title')->order('id DESC')->where("cid={$cate['id']} AND id < {$id}")->find();
@@ -37,7 +47,7 @@ class ShowController extends HomeBaseController {
         $map = array('id' => $id);
         M($table)->where($map)->setInc('view');
 
-        $tpl=$cate['template_show'];
+        $tpl=isset($cate['template_show']) ? $cate['template_show'] : 'Show_index';
         $this->display($tpl);
 
     }

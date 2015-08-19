@@ -4,6 +4,9 @@ use Common\Controller\AdminBaseController;
 
 class ArticleController extends AdminBaseController {
 	public function index(){
+		//批量
+		$this->_batch('Article');
+
 		//搜索
 		$where=$this->_search();
 
@@ -24,9 +27,6 @@ class ArticleController extends AdminBaseController {
 
 		//分页
 		$limit=$this->_page('Article',$where);
-
-		//批量
-		$this->_batch('Article');
 
 		//数据
 		$list=M('Article')
@@ -99,10 +99,7 @@ class ArticleController extends AdminBaseController {
 
 	public function del($id){
 		$return=D('Article')->delete($id);
-		if($return){
-			
-			$this->success('删除成功');
-		}
+		if($return) $this->success('删除成功');
 		else $this->error('删除失败');
 	}
 

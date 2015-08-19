@@ -1,12 +1,10 @@
 <?php
 return array(
-    /* 09-模板引擎设置 */
-    'TMPL_ACTION_ERROR'     =>  MODULE_PATH.'View/jump.html', // 默认错误跳转对应的模板文件
-    'TMPL_ACTION_SUCCESS'   =>  MODULE_PATH.'View/jump.html', // 默认成功跳转对应的模板文件
-    'TMPL_EXCEPTION_FILE'   =>  MODULE_PATH.'View/exception.html',// 异常页面的模板文件
 
     /* 12-URL设置 */
     'URL_HTML_SUFFIX'       =>  '',  // URL伪静态后缀设置
+    'URL_CASE_INSENSITIVE'  =>  false,// 默认false 表示URL区分大小写 true则表示不区分大小写
+
 
     /*AUTH权限认证*/
     'AUTH_CONFIG'=>array(

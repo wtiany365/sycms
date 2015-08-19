@@ -4,32 +4,24 @@ use Think\Model;
 
 class CategoryModel extends Model{
 
-    public function getCategory(){
-        $cid=I('cid','','intval');
-        $cname = I('cname', '', 'htmlspecialchars,trim');
-
-        if(!empty($cid)) $map['id']=$cid;
-        elseif(!empty($cname)) $map['name']=$cname;
-        else E('栏目不存在');
-
+    public function getCategory($cname){
+        $map['name']=$cname;
         $category=$this->where($map)->find();
-        $category['url']=U('/'.$category['name'],'','html',true);
+
+        $router=C('URL_ROUTER_ON');
+        if($router) $category['url']=U('/'.$category['name'],'','html',true);
+        else{
+            if($v['mid']==0) $v['url']=U(ucfirst($v['name'].'/index'),'','html',true);
+            elseif($v['mid']==2) $v['url']=U('Page/index',array($v['id']),'html',true);
+            else $v['url']=U('List/index',array($v['id']),'html',true);
+        }
+
         if(!empty($category['setting'])){
-            $setting=unserialize($category['setting']);
-            unset($category['setting']);
-            $category=array_merge($setting,$category);
+            $category['setting']=unserialize($category['setting']);
         }
         return $category;
     }
 
-    public function getNavLine($cid){
-        $category=$this->where('status=1')->getField('id,pid,title,name');
-        $nav_line=\Lib\ArrayTree::getParents($category,$cid);
-        foreach ($nav_line as &$v) {
-            $v['url']=U('/'.$v['name']);
-        }
-        return $nav_line;
-    }
 
 
 

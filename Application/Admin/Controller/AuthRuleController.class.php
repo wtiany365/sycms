@@ -31,11 +31,7 @@ class AuthRuleController extends AdminBaseController {
 		if(!$data) $this->error($Model->getError());
 
 		$return=$Model->add($data);
-		if($return){
-			session('admin_menu',NULL);
-			F('AdminAuth',NULL);
-			$this->success('添加成功');
-		}
+		if($return) $this->success('添加成功');
 		else $this->error('添加失败');
 	}
 
@@ -55,11 +51,7 @@ class AuthRuleController extends AdminBaseController {
 		if(!$data) $this->error($Model->getError());
 
 		$return=$Model->save($data);
-		if($return){
-			session('admin_menu',null);
-			F('AdminAuth',NULL);
-			$this->success('修改成功');
-		}
+		if($return) $this->success('修改成功');
 		else $this->error('修改失败');
 	}
 
@@ -67,12 +59,8 @@ class AuthRuleController extends AdminBaseController {
 		$child=M('AuthRule')->where("pid={$id}")->count();
 		if($child) $this->error("请先删除当前菜单的子菜单");
 
-		$return=M('AuthRule')->delete($id);
-		if($return){
-			session('admin_menu',null);
-			F('AdminAuth',NULL);
-			$this->success('删除成功');
-		}
+		$return=D('AuthRule')->delete($id);
+		if($return) $this->success('删除成功');
 		else $this->error('删除失败');
 	}
 

@@ -82,4 +82,17 @@ class AuthRuleModel extends Model{
         } 
     }
 
+    protected function _after_insert($data,$options){
+        session('admin_menu',NULL);
+        F('AdminAuth',NULL);
+    }
+    protected function _after_update($data,$options){
+        session('admin_menu',NULL);
+        F('AdminAuth',NULL);
+    }
+    protected function _after_delete($data,$options) {
+        session('admin_menu',NULL);
+        F('AdminAuth',NULL);
+    }
+
 }

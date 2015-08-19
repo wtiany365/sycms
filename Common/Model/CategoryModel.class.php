@@ -11,10 +11,13 @@ class CategoryModel extends Model {
 	    		->where('status=1')
 	    		->order('sort asc')
 	    		->getField('id,pid,title,name,mid,is_menu',true);
-	    	$model=M('Model')->getField('id,model_table');
+	    	if(!$category) return false;
 
+	    	$model=M('Model')->getField('id,model_table');
 			foreach ($category as &$v) {
-				$v['url']=U('/'.$v['name'],'','html',true);
+				$_url=D('Common/Urlmap')->getRouteRule();
+				$v['url']=UU($_url[$v['name']]);
+
 				if($v['mid']){
 					$v['table']=$model[$v['mid']];
 				}else{

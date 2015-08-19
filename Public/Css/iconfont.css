@@ -3,7 +3,7 @@
   src: url('iconfont.eot');
   src: url('iconfont.eot?#iefix') format('embedded-opentype'), url('iconfont.woff') format('woff'), url('iconfont.ttf') format('truetype'), url('iconfont.svg#iconfont') format('svg');
 }
-
+.icon,
 [class^="icon-"]{
   font-family:"iconfont" !important;
   -webkit-font-smoothing: antialiased;

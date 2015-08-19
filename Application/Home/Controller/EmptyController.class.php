@@ -9,15 +9,16 @@ class EmptyController extends Controller {
 	public function index() {
 		header("HTTP/1.1 404 Not Found");  
 		header("Status: 404 Not Found");  
-		echo '控制器不存在';
-	
+		include(COMMON_PATH.'View/404.html');
+		exit();
 	}
 
 	//访问不存在的方法时
 	function _empty($name) {
 		header("HTTP/1.1 404 Not Found");  
 		header("Status: 404 Not Found");
-		echo $name.'方法不存在';
+		include(COMMON_PATH.'View/404.html');
+		exit();
 	}
 
 }

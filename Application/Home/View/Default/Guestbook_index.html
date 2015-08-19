@@ -5,15 +5,15 @@
 		<div class="row">
 			<div class="span-8">
 				<div class="guestbook-box">
-					<div class="tit">留言板</div>
+					<div class="tit">提交建议</div>
 					<div class="con">
-						<div class="alert mbt10">欢迎留言意见</div>
+						<div class="alert mbt10">欢迎提交意见</div>
 						<foreach name="list" item="v">
 						<div class="msg-box">
 							<div class="tit">昵称: {$v.username} <span class="fr">留言时间: {$v.add_time}</span class="fr"></div>
 							<div class="con">留言: {$v.content}</div>
 							<notempty name="v.reply">
-							<div class="fot">回复：{$v.reply} <span class="fr">回复时间: {$v.reply_time}</span class="fr"></div>
+							<div class="fot blue">回复：{$v.reply} <span class="fr">回复时间: {$v.reply_time}</span class="fr"></div>
 							</notempty>
 						</div>
 						</foreach>
@@ -22,14 +22,14 @@
 						{$page}
 					</div>
 					<div class="fot mtp20">
-						<div class="alert mbt10">给我们留言</div>
-						<form id="Form" action="{:U('/Guestbook')}" method="post">
+						<div class="alert mbt10">提交建议</div>
+						<form id="Form" action="{:UU('guestbook/index')}" method="post">
 							<table>
 								<tr>
 									<td width="10%">昵称: </td>
 									<td><input id="username" type="text" name="username"></td>
-									<td width="10%">电话:</td>
-									<td><input id="mobile" type="text" name="mobile"></td>
+									<td width="10%">邮箱:</td>
+									<td><input id="email" type="text" name="email"></td>
 								</tr>
 								<tr>
 									<td>留言:</td>
@@ -84,7 +84,8 @@ $(function(){
 		//验证规则
 		var msg='';
 		if(self.find("#username").val() == '') msg+='请填写留言昵称,';
-		if(self.find("#mobile").val() == '') msg+='请填写联系电话';
+		if(self.find("#email").val() == '') msg+='请填写联系邮箱,';
+		if(self.find("#CodeImg").val() == '') msg+='请填写验证码';
 		if(msg != '') { self.find("#AlertMsg").addClass('red').show().text(msg);return false; }
 
 		//提交

@@ -4,19 +4,20 @@ use Common\Controller\HomeBaseController;
 
 //单页
 class PageController extends HomeBaseController {
-    public function index() {
-        $cate=D('Category')->getCategory();
+    public function index($cname='') {
+        if( empty($cname) || strlen($cname) >15 ) E('非法操作');
+        
+        $cate=D('Category')->getCategory($cname);
         if($cate['is_menu']){
             $cate=M('Category')->where("pid={$cate['id']}")->order('sort asc')->find();
             $cate['url']=U('/'.$cate['name'],'','html',true);
             if(!empty($cate['setting'])){
-                $set=unserialize($cate['setting']);
-                unset($cate['setting']);
-                $cate=array_merge($set,$cate);
+                $cate['setting']=unserialize($cate['setting']);
             }
         }
 
         $this->assign('CATEGORY',$cate);
+
         $this->assign('CID',$cate['id']);
         $this->assign('PID',$cate['pid']);
 
@@ -24,7 +25,7 @@ class PageController extends HomeBaseController {
         $show=M('Page')->where("cid={$cate['id']}")->find();
         $this->assign('show',$show);
 
-        $tpl=$cate['template_page'];
+        $tpl=isset($cate['template_page']) ? $cate['template_page'] : 'Page_index';
         $this->display($tpl);
     }
     	

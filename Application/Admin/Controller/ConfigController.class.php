@@ -28,18 +28,19 @@ class ConfigController extends AdminBaseController {
 	}
 	public function add(){
 		if(IS_POST){$this->addPost();exit;}
+
+		$module=D('Common/Config')->getModule();
+		$this->assign('module',$module);
+
 		$this->display();
 	}
 	private function addPost(){
-		$Model=D('Config');
+		$Model=D('Common/Config');
 		$data=$Model->create();
 		if(!$data) $this->error($Model->getError());
 
 		$return=$Model->add($data);
-		if($return){ 
-			F('AdminConfig',NULL);
-			$this->success('添加成功');
-		}
+		if($return)$this->success('添加成功');
 		else $this->error('添加失败');
 	}
 
@@ -47,27 +48,25 @@ class ConfigController extends AdminBaseController {
 		if(IS_POST){$this->editPost();exit;}
 		$info=M('Config')->find($id);
 		$this->assign('info',$info);
+
+		$module=D('Common/Config')->getModule();
+		$this->assign('module',$module);
+
 		$this->display();
 	}
 	private function editPost(){
-		$Model=D('Config');
+		$Model=D('Common/Config');
 		$data=$Model->create();
 		if(!$data) $this->error($Model->getError());
 
 		$return=$Model->save($data);
-		if($return){
-			F('AdminConfig',NULL);
-			$this->success('修改成功');
-		}
+		if($return)$this->success('修改成功');
 		else $this->error('修改失败');
 	}
 
 	public function del($id){
-		$return=M('Config')->delete($id);
-		if($return){
-			F('AdminConfig',NULL);
-			$this->success('删除成功');
-		}
+		$return=D('Common/Config')->delete($id);
+		if($return) $this->success('删除成功');
 		else $this->error('删除失败');
 	}
 
@@ -86,15 +85,13 @@ class ConfigController extends AdminBaseController {
 		else $this->display('groups');
 	}
 	private function groupsPost(){
-		$post=I('post.','');
+		$post=I('post.','','trim');
 
         foreach ($post as $name => $value) {
         	if(is_array($value)) $value=arr_str($value);
             $map = array('name' => $name);
-            M('Config')->where($map)->setField('value', $value);
+            D('Common/Config')->where($map)->setField('value', $value);
         }
-
-        F('AdminConfig',NULL);
         $this->success('保存成功！');
 	}
 	//上传配置
@@ -115,8 +112,6 @@ class ConfigController extends AdminBaseController {
 			$type_name='UPLOAD_TYPE_CONFIG_'.strtoupper($_POST['FILE_UPLOAD_TYPE']);
 			$_POST['UPLOAD_TYPE_CONFIG']=$_POST[$type_name];
 		}
-		// print_r($type_name);
-		// print_r($_POST);die;
 		$this->groupsPost();
 	}
 

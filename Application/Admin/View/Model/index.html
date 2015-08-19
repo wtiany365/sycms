@@ -2,6 +2,7 @@
 
 <block name="list">
     <tr>
+        <th width="50" class="tc">序号</th>
         <th width="100">名称</th>
         <th width="100">表名</th>
         <th width="100">控制器</th>
@@ -11,6 +12,7 @@
     </tr>
     <foreach name="list" item="v">
     <tr>
+        <td class="tc">{$v.id}</td>
         <td>{$v.model_name}</td>
         <td>{$v.model_table}</td>
         <td>{$v.model_controller}</td>

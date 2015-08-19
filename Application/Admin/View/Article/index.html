@@ -28,7 +28,7 @@
 </tr>
 <foreach name="list" item="v">
 <tr>
-    <td class="tc"><input class="CheckOne" type="checkbox" name="id[{$v.id}]"></td>
+    <td class="tc"><input class="CheckOne" type="checkbox" name="pk[]" value="{$v.id}"></td>
     <td>{$v.title}</td>
     <td class="tc">{$cate[$v['cid']]}</td>
     <td class="tc">{$v.add_time}</td>
@@ -44,7 +44,7 @@
 <div class="input-group">
     <span class="text-icon"> 批 量 </span>
     <select name="batch">
-        <option value="disable">放入回收站</option>
+        <option value="del">放入回收站</option>
     </select>
 </div>
 </block>

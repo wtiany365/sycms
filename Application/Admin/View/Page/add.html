@@ -15,6 +15,16 @@
 			            添加文章
 			        </th>
 			    </tr>
+                <tr>
+                    <td>栏目:</td>
+                    <td>
+                        <select name="cid">
+                        <foreach name="cate" item="v">
+                            <option value="{$v.id}" <eq name="v.is_menu" value="1">disabled</eq> >{$v.mark}{$v.title}</option>
+                        </foreach>
+                        </select>
+                    </td>
+                </tr>
 				<tr>
 					<td>标题:</td>
 					<td>
@@ -37,16 +47,6 @@
 					<td>描述:</td>
 					<td>
 						<textarea name="description" style="width:50%" tip="描述(字数80个汉字，160个字符以内)"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>栏目:</td>
-					<td>
-			            <select name="cid">
-			            <foreach name="cate" item="v">
-			            	<option value="{$v.id}" <eq name="v.is_menu" value="1">disabled</eq> >{$v.mark}{$v.title}</option>
-			            </foreach>
-			            </select>
 					</td>
 				</tr>
                 <tr>

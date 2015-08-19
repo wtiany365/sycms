@@ -4,7 +4,7 @@ use Common\Controller\AdminBaseController;
 
 class FileManageController extends AdminBaseController {
 
-    public function index($root){
+    public function index(){
 
         //获取图标数组
         $ext_path ='Public/Img/ext/';
@@ -15,16 +15,23 @@ class FileManageController extends AdminBaseController {
         }
 
         //获取当前目录及上级目录
-        $root=I('root','Application~Admin~View','trim');
+        $root=I('root','Application/Home/View','trim');
         $this->assign('root',$root);
-        $path_root=str_replace('~','/',$root);
+
+        //$path_root=str_replace('~','/',$root);
+        $path_root=$root;
+
         $dir=I('dir','','trim');
         if(empty($dir)){
         	$path_now=$path_root;
         	$back='';
         }else{
-            $path_now=$path_root.'/'.str_replace(array('~','#'),array('/','.'),$dir);
-            $back=substr($dir,0,strrpos($dir,'~'));//上级目录
+
+            //$path_now=$path_root.'/'.str_replace(array('~','#'),array('/','.'),$dir);
+            $path_now=$path_root.'/'.$dir;
+
+            //$back=substr($dir,0,strrpos($dir,'~'));//上级目录
+            $back=substr($dir,0,strrpos($dir,'/'));
         }
         $this->assign('back',$back);
 
@@ -47,7 +54,10 @@ class FileManageController extends AdminBaseController {
 
             $file_list[$k]['ext']=$this_ext;
             $file_list[$k]['ext_img']=$ext[$this_ext] ? $ext[$this_ext] : $ext['hlp'];
-            $file_list[$k]['dir']=str_replace(array('/','.'),array('~','#'),$v);
+
+            //$file_list[$k]['dir']=str_replace(array('/','.'),array('~','#'),$v);
+            $file_list[$k]['dir']=$v;
+
             $file_list[$k]['name']=basename($v);
 
         }
@@ -61,8 +71,12 @@ class FileManageController extends AdminBaseController {
     public function add($root){
         if(IS_POST){ $this->addPost($root,$dir);exit; }
         $dir=I('dir','');
-        if(empty($dir)) $path=str_replace('~','/',$root).'/';
-        else $path=str_replace('~','/',$root).'/'.str_replace(array('~','#'),array('/','.'),$dir).'/';
+
+        // if(empty($dir)) $path=str_replace('~','/',$root).'/';
+        // else $path=str_replace('~','/',$root).'/'.str_replace(array('~','#'),array('/','.'),$dir).'/';
+        if(empty($dir)) $path=$root.'/';
+        else $path=$root.'/'.$dir.'/';
+
         $this->assign('path',$path);
         $this->display();
     }
@@ -79,7 +93,7 @@ class FileManageController extends AdminBaseController {
         if(is_file($file)) $this->error('同名文件存在');
         //添加文件
         if(file_put_contents($file, $content)){
-            $this->success('文件添加成功',U('index',array('root'=>$post['root'],'dir'=>$post['dir'])));
+            $this->success('文件添加成功',U('index')."?root={$post['root']}&dir={$post['dir']}");
         }else{
             $this->error('文件添加失败');
         }
@@ -88,7 +102,9 @@ class FileManageController extends AdminBaseController {
     public function edit($root,$dir){
         if(IS_POST){ $this->editPost($root,$dir);exit; }
 
-        $info['file']=str_replace('~','/',$root).'/'.str_replace(array('~','#'),array('/','.'),$dir);
+        //$info['file']=str_replace('~','/',$root).'/'.str_replace(array('~','#'),array('/','.'),$dir);
+        $info['file']=$root.'/'.$dir;
+
         $info['title']=basename($info['file']);
         $info['content']=file_get_contents($info['file']);
 
@@ -112,18 +128,21 @@ class FileManageController extends AdminBaseController {
             $file=$dirname.'/'.$post['title_new'];
         }
         //修改文件
-        $back=substr($post['dir'],0,strrpos($post['dir'],'~'));
+        //$back=substr($post['dir'],0,strrpos($post['dir'],'~'));
+        $back=substr($post['dir'],0,strrpos($post['dir'],'/'));
+
         if(file_put_contents($file, $content)){
-            $this->success('文件修改成功',U('index',array('root'=>$post['root'],'dir'=>$back)));
+            $this->success('文件修改成功',U('index')."?root={$post['root']}&dir={$back}");
         }else{
             $this->error('文件修改失败');
         }
     }
 
     public function del($root,$dir){
-        $path_root=str_replace(array('~'),array('/'),$root);
-        $path_dir=str_replace(array('~','#'),array('/','.'),$dir);
-        $file=$path_root.'/'.$path_dir;
+        // $path_root=str_replace(array('~'),array('/'),$root);
+        // $path_dir=str_replace(array('~','#'),array('/','.'),$dir);
+        // $file=$path_root.'/'.$path_dir;
+        $file=$root.'/'.$dir;
 
         if(is_file($file)){
             if(unlink($file)){

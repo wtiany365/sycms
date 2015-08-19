@@ -1,3 +1,3 @@
-D:
-cd D:\WampService\www\ShanYu\Common\Cron
-php.exe WinCron.php Api/Cron/index
+E:
+cd E:\www\shanyu
+php.exe api.php Cron

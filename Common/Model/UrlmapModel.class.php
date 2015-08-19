@@ -3,6 +3,21 @@ namespace Common\Model;
 use Think\Model;
 
 class UrlmapModel extends Model{
+	private $cateUrl=array(
+		0=>'[name]/index',
+		1=>'list/index?cname=[name]',
+		2=>'page/index?cname=[name]',
+	);
+	public function categoryUrl($mid,$name){
+		$urls=$this->cateUrl;
+		if(isset($urls[$mid])){
+			$url=str_replace('[name]', $name, $urls[$mid]);
+		}else{
+			$url=str_replace('[name]', $name, $urls[1]);
+		}
+		return $url;
+	}
+
 
 //获取name对应路由
 	public function getRouteRule(){
@@ -23,9 +38,11 @@ class UrlmapModel extends Model{
 			foreach ($route as $k => $v){
 				//解析URL
 				$info   =  parse_url($v);
+
 				//判断是否完整 url
-				$arr   =  explode("/",$info['path']);
-				if(count($arr)!=3){ continue; }
+				//$arr   =  explode("/",$info['path']);
+				//if(count($arr)!=3){ continue; }
+
 				//解析参数
 				$vars = array();
 				if(isset($info['query'])) { // 解析地址里面参数 合并到vars
@@ -38,25 +55,6 @@ class UrlmapModel extends Model{
 			F('RouteUrl',$route_url);
 		}
 		return $route_url;
-	}
-
-//根据模型ID设置Category的路由URL
-	public function getCategoryUrl($model_id,$category_name,$cid){
-		switch ($model_id) {
-			case 0:
-				//独立模型
-				$url='home/'.$category_name.'/index';
-				break;
-			case 2:
-				//单页模型
-				$url='home/page/index?cid='.$cid;
-				break;
-			default:
-				//文章|图集
-				$url='home/list/index?cid='.$cid;
-				break;
-		}
-		return $url;
 	}
 
 //重建路由缓存

@@ -15,6 +15,7 @@ class UrlMapController extends AdminBaseController {
 		$list=M('Urlmap')
 			->limit($limit)
 			->where($where)
+			->order('id desc')
 			->select();
 		$this->assign('list',$list);
 
@@ -26,8 +27,9 @@ class UrlMapController extends AdminBaseController {
 		$this->display();
 	}
 	private function addPost(){
-		$Model=D('Urlmap');
-		$data=$Model->create();
+		$Model=D('Common/Urlmap');
+		$data=I('post.','','');
+
 		if(!$data) $this->error($Model->getError());
 
 		$return=$Model->add($data);
@@ -44,8 +46,8 @@ class UrlMapController extends AdminBaseController {
 		$this->display();
 	}
 	private function editPost(){
-		$Model=D('Urlmap');
-		$data=$Model->create();
+		$Model=D('Common/Urlmap');
+		$data=I('post.','','');
 		if(!$data) $this->error($Model->getError());
 
 		$return=$Model->save($data);

@@ -24,8 +24,8 @@ class CategoryController extends AdminBaseController {
 		if(IS_POST){$this->addPost();exit;}
 		$pid=I('pid','0');
 		$this->assign('pid',$pid);
-		$pid=I('mid','0');
-		$this->assign('mid',$pid);
+		$mid=I('mid','1');
+		$this->assign('mid',$mid);
 
 		$this->initVar();
 

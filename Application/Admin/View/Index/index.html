@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>山雨内容管理系统</title>
-    <link rel="shortcut Icon" href="favicon.ico" />
+    <link rel="shortcut Icon" href="__PUBLIC__/Img/favicon.ico" />
 
     <link rel="stylesheet" href="__PUBLIC__/Css/reset.css" type="text/css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/admin.css" type="text/css" />
@@ -55,17 +55,21 @@
         </div>
     </div>
     <div id="layout-tab" class="cl">
+        <!-- 搜索菜单 -->
         <div class="search fl">
-        <div class="input-group"><input id="SearchKey" type="text" name="keywords" /><span id="Search" class="text-icon" data-url="{:U('Admin/AdminMenu/search')}"><i class="icon-search"></i></span></div>
+        <div class="input-group"><input id="SearchKey" type="text" name="keywords" /><span id="Search" class="text-icon" data-url="{:U('Admin/Index/search')}"><i class="icon-search"></i></span></div>
         </div>
         <div class="action fl">
+            <!-- 快捷菜单 -->
             <ul class="float">
             	<foreach name="admin_menu" item="nav">
-                <li><a class="OpenApp" data-url="{:U($nav['name'])}" href="javascript:;">{$nav.title}</a></li>
+                <li><a class="OpenApp" data-url="{:U($nav['name'])}" href="javascript:;"><notempty name="nav.title_menu">{$nav.title_menu}<else />{$nav.title}</notempty></a></li>
                 </foreach>
+
             </ul>
         </div>
         <div class="action fr">
+            <!-- 快捷操作 -->
             <ul class="float">
                 <li><a id="ReloadIframe"><i class="icon-reload"></i>刷新页面</a></li>
                 <li><a id="ClearCache" data-url="{:U('Admin/Index/delCache')}" href="javascript:void(0);"><i class="icon-clear"></i>清理缓存</a></li>

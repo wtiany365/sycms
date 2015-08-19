@@ -1,10 +1,6 @@
 <?php
 
-//dump简写封装用于调试输出
-function p($param){
-	//dump(数组参数,是否显示1/0,显示标签('<pre>'),模式[0为print_r])
-	dump($param,1,'',0);
-}
+/*------------------------- 数字转文字 -------------------------*/
 /*
 *	数字替换文字
 *	tpl:int_str(1,'1:开启,0:关闭')
@@ -70,27 +66,8 @@ function arr_str($array=''){
     return $string;
 }
 
-/**
- * 用于加载第三方Common/Lib中的类
- */
-function lib($class,$ext='.php'){
-    $baseUrl = COMMON_PATH.'Lib/';
-    return import($class, $baseUrl, $ext);
-}
 
-//检测Auth中允许访问的节点
-function check_auth($rule,$type=1){
-    static $Auth    =   null;
-    if (!$Auth) {
-        $Auth       =   new \Think\Auth();
-    }
-    if(!$Auth->check($rule,UID,$type)){
-        return false;
-    }
-    return true;
-}
-
-
+/*------------------------- 字符串 -------------------------*/
 /**
  * 字符串截取，支持中文和其他编码
  */
@@ -153,6 +130,9 @@ function rand_string($len=6,$type='',$addChars='') {
     }
     return $str;
 }
+
+
+/*------------------------- 安全过滤 -------------------------*/
 //输出安全的html
 function safe_html($text, $tags = null) {
 	$text	=	trim($text);
@@ -209,11 +189,50 @@ function safe_html($text, $tags = null) {
 	$text	=	str_replace('  ',' ',$text);
 	return $text;
 }
-//根据数据库路由规则生成URL
+
+
+/*------------------------- 核心封装 -------------------------*/
+/**
+ * 用于加载第三方Common/Lib中的类
+ */
+function lib($class,$ext='.php'){
+    $baseUrl = COMMON_PATH.'Lib/';
+    return import($class, $baseUrl, $ext);
+}
+/**
+ * dump简写封装用于调试输出
+ */
+function p($param){
+	//dump(数组参数,是否显示1/0,显示标签('<pre>'),模式[0为print_r])
+	dump($param,1,'',0);
+}
+/**
+ * 处理插件钩子
+ */
+function hook($hook,$params=array()){
+    \Think\Hook::listen($hook,$params);
+}
+/**
+ * 搭配UrlMapModel使用的根据路由生成URL
+ */
 function UU($url='',$vars='',$suffix=true,$domain=false){
 	//获取数据库URL并缓存
 	$routes=D('Common/Urlmap')->getRouteUrl();
-	if(empty($routes) && !C('URL_ROUTER_ON')) return U($url,$vars,$suffix,$domain);
+
+	if(!C('URL_ROUTER_ON') && empty($routes)){
+		//按变量顺序绑定
+		if(C('URL_PARAMS_BIND_TYPE') && !empty($url)){
+			if(!empty($vars)){
+				$url.='/'.implode('/', $vars);
+				$vars='';
+			}else{
+				$_parse=parse_url($url);
+				parse_str($_parse['query'],$_query);
+				$url=$_parse['path'].'/'.implode('/', $_query);
+			}
+		}
+		return U($url,$vars,$suffix,$domain);
+	} 
 
     // 解析URL
     $info   =  parse_url($url);
@@ -334,18 +353,23 @@ function UU($url='',$vars='',$suffix=true,$domain=false){
 	}else{ // PATHINFO模式或者兼容URL模式
 		
 		/*路由链接_替换_开始*/
-		if(empty($var[C('VAR_MODULE')])){
-			$var[C('VAR_MODULE')]=MODULE_NAME;
-		}
+
+		// if(empty($var[C('VAR_MODULE')])){
+		// 	$var[C('VAR_MODULE')]=MODULE_NAME;
+		// }
 		$module_controller_action=strtolower(implode($depr,array_reverse($var)));
 
 		$has_route=false;
 		if(isset($routes[$module_controller_action])){
 			$urlrules=$routes[$module_controller_action];
-
 			$empty_query_urlrule=array();
 			foreach ($urlrules as $ur){
-				$intersect=array_intersect($ur['query'], $vars);
+				if(!empty($ur['query'])){
+					$intersect=array_intersect($ur['query'], $vars);
+				}else{
+					$intersect=true;
+				}
+				
 				if($intersect){
 					$vars=array_diff_key($vars,$ur['query']);
 					$url= $ur['url'];
@@ -426,12 +450,3 @@ function UU($url='',$vars='',$suffix=true,$domain=false){
 	return $url;
 }
 
-/**
- * 处理插件钩子
- * @param string $hook   钩子名称
- * @param mixed $params 传入参数
- * @return void
- */
-function hook($hook,$params=array()){
-    \Think\Hook::listen($hook,$params);
-}

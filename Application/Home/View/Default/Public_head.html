@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-<title>{:C('SITE_TITLE')}</title> 
-<meta name="keywords" content="{:C('SITE_KEYWORDS')}"> 
-<meta name="description" content="{:C('SITE_DESCRIPTION')}"> 
-<link rel="shortcut icon" href="favicon.ico" />
+<title><?php if(isset($meta_title) && !empty($meta_title)): echo $meta_title.' - ';endif; ?> {:C('SITE_TITLE')}</title>
+<meta name="keywords" content="<?php if(isset($meta_keywords) && !empty($meta_keywords)): echo $meta_keywords;else:echo C('SITE_KEYWORDS');endif; ?>"> 
+<meta name="description" content="<?php if(isset($meta_description) && !empty($meta_description)): echo $meta_description;else:echo C('SITE_DESCRIPTION');endif; ?>"> 
+<link rel="shortcut icon" href="__PUBLIC__/Img/favicon.ico" />
 <link href="__PUBLIC__/Css/reset.css" rel="stylesheet" type="text/css" />
 <link href="__PUBLIC__/Css/iconfont.css" rel="stylesheet" type="text/css" />
 <link href="__THEME__/home.css" rel="stylesheet" type="text/css" />
@@ -21,7 +21,7 @@
 					<a href="{:U('/','',true)}">网站首页</a>
 				</div>
 				<div class="fr">
-					<a href="###">订阅本站</a>
+					<a href="{:UU('guestbook/index')}">提交建议</a>
 				</div>
 			</div>
 		</div>
@@ -32,10 +32,9 @@
 					<h2>成功，唯有积累，没有奇迹</h2>
 				</div>
 				<div class="search fr">
-					<?php $key=I('get.key',''); ?>
-					<form action="{:U('/search')}"  method="get">
-					<input type="text" name="key" value="{$key}"><input type="submit" value="搜索" style="border-radius: 0;">
-					</form>
+					<?php $key=I('key',''); ?>
+					<input id="searchKey" type="text" value="{$key}" maxlength="55" placeholder="输入搜索关键字"><a id="searchBtn" href='javascript:;' class="btn" style="border-radius: 0;">搜索</a>
+					}
 				</div>
 			</div>
 		</div>
@@ -71,6 +70,19 @@
 		},function(){
 			$(this).find('a').removeClass('current');
 			$(this).find('ul').stop().slideUp('fast');
+		});
+		$('#searchKey').keydown(function(e){
+			if(e.keyCode==13){
+			    $('#searchBtn').click();
+			}
+		});
+		$('#searchBtn').click(function(e){
+			var key = $('#searchKey').val();
+			if(key == ''){
+				alert('请输入搜索关键字');
+				return false;
+			}
+			window.location.href="{:U('Search/index')}"+'?key='+key;
 		});
 	});
 	</script>
