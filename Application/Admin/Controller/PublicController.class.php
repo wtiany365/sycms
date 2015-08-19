@@ -35,7 +35,7 @@ class PublicController extends Controller {
     public function logout(){
         session('[destroy]');
         cookie('admin_token',null);
-        $this->success('成功退出登录',U('Admin/Public/login'));
+        $this->redirect('/Admin');
     }
 
     //输出验证码
