@@ -20,7 +20,7 @@
         thumb = '__PUBLIC__/Img/thumb.png',
         Uploader;
 
-    Uploader = WebUploader.create({
+    var Uploader = WebUploader.create({
         swf: "__PUBLIC__/Js/Webuploader/Uploader.swf",
         server:"{:U('Admin/Index/widget/name/uploader')}",
         pick: '#'+id+'_pick',
@@ -42,7 +42,7 @@
         },
         formData:{
             session_id : "{:session_id()}",
-        };
+        },
     });
 
     Uploader.on( 'fileQueued', function( file ) {
