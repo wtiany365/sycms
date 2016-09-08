@@ -12,9 +12,6 @@
 
 ## 后台功能截图
 
-### 登录
-![后台登录](http://git.oschina.net/uploads/images/2016/0908/164839_f1d9b862_10167.png "后台登录")
-
 ### 首页
 ![后台首页](http://git.oschina.net/uploads/images/2016/0908/164935_54804bb8_10167.png "后台首页")
 
