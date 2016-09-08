@@ -9,12 +9,32 @@
 图集: {:W('Uploader/images',array('images',$info['images']))}
 ```
 
-## 截图
-### 动态后台菜单及权限节点
-![动态后台菜单及权限节点](http://git.oschina.net/uploads/images/2015/0807/115621_7585be13_10167.jpeg "动态后台菜单及权限节点")
-### 栏目分类
-![栏目分类](http://git.oschina.net/uploads/images/2015/0807/115802_a57e7c23_10167.jpeg "栏目分类")
-### 内容添加
-![内容添加](http://git.oschina.net/uploads/images/2015/0807/115929_60dac37b_10167.jpeg "内容添加")
-### 上传方式
-![上传方式](http://git.oschina.net/uploads/images/2015/0807/120338_e9157b26_10167.jpeg "上传方式")
+
+## 后台功能截图
+
+### 登录
+![后台登录](http://git.oschina.net/uploads/images/2016/0908/164839_f1d9b862_10167.png "后台登录")
+
+### 首页
+![后台首页](http://git.oschina.net/uploads/images/2016/0908/164935_54804bb8_10167.png "后台首页")
+
+### 内容编辑
+![内容编辑](http://git.oschina.net/uploads/images/2016/0908/165007_f917d34a_10167.png "内容编辑")
+
+### 全局配置
+![全局配置](http://git.oschina.net/uploads/images/2016/0908/165030_8de0dded_10167.png "全局配置")
+
+### 栏目管理
+![栏目管理](http://git.oschina.net/uploads/images/2016/0908/165054_e03abc9f_10167.png "栏目管理")
+
+
+## 前台截图
+
+### 首页
+![首页](http://git.oschina.net/uploads/images/2016/0908/165417_d86de572_10167.jpeg "首页")
+
+### 列表
+![列表](http://git.oschina.net/uploads/images/2016/0908/165449_e149b175_10167.png "列表")
+
+### 内页
+![内页](http://git.oschina.net/uploads/images/2016/0908/165506_eafa154a_10167.png "内页")
