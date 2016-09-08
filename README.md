@@ -2,9 +2,8 @@
 ## 简介
 山雨内容管理系统基于THINKPHP 3.2版本制作,实现权限管理,接入短信接口,上传驱动切换(本地/七牛),全局动态参数,后台模版页自动生成(FormBuilder),封装富文本UEDITOR/上传WEBUPLOADER插件/弹出层ARTDIALOG等.
 
-## 示例
+## Widget封装调用
 ``` php
-//Widget封装插件调用
 内容: {:W('Ueditor/editor',array('content',$info['content']))}
 图集: {:W('Uploader/images',array('images',$info['images']))}
 ```
